@@ -1,0 +1,39 @@
+
+Batch 2: https://leetcode.com/problems/unique-paths/description/
+
+int uniquePaths(int m, int n) {
+    // Allocate memory for a 2D array
+    int** f = (int**)malloc(m * sizeof(int*));
+    for (int i = 0; i < m; ++i) {
+        f[i] = (int*)malloc(n * sizeof(int));
+    }
+
+    // Initialize the starting point
+    f[0][0] = 1;
+
+    // Fill the rest of the array
+    for (int i = 0; i < m; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (i == 0 && j == 0) {
+                continue; // Skip the starting point since it's already initialized
+            }
+            f[i][j] = 0;
+            if (i > 0) {
+                f[i][j] += f[i - 1][j];
+            }
+            if (j > 0) {
+                f[i][j] += f[i][j - 1];
+            }
+        }
+    }
+
+    int result = f[m - 1][n - 1];
+
+    // Free allocated memory
+    for (int i = 0; i < m; ++i) {
+        free(f[i]);
+    }
+    free(f);
+
+    return result;
+}
