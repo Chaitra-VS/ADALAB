@@ -1,0 +1,24 @@
+
+int minDistance(char* word1, char* word2) {
+    int m=strlen(word1),n=strlen(word2),prev;
+    int cur[n+1];
+    for(int j=0;j<=n;j++){
+        cur[j]=j;
+    }
+    for(int i=1;i<=m;i++){
+        prev=cur[0];
+        cur[0]=i;
+        for(int j=1;j<=n;j++){
+            int tmp=cur[j];
+            if(word1[i-1]==word2[j-1]){
+                cur[j]=prev;
+            }
+            else{
+                cur[j]=(prev>cur[j-1])?cur[j-1]:(prev>cur[j])?cur[j]:prev;
+                cur[j]++;
+            }
+            prev=tmp;
+        }
+    }
+    return cur[n];
+}
